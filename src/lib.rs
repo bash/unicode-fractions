@@ -54,35 +54,69 @@ impl Display for VulgarFraction {
 impl VulgarFraction {
     fn write_vulgar_fraction(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const FRACTION_SLASH: char = '\u{2044}';
-        self.write_nominator(f)?;
+        write_number::<Superscript>(f, self.nominator)?;
         f.write_char(FRACTION_SLASH)?;
-        self.write_denominator(f)
-    }
-
-    fn write_nominator(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        const SUPERSCRIPT_MINUS: char = '\u{207B}';
-        write_number(f, self.nominator, SUPERSCRIPT_MINUS, digit_to_superscript)
-    }
-
-    fn write_denominator(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        const SUBSCRIPT_MINUS: char = '\u{208B}';
-        write_number(f, self.denominator, SUBSCRIPT_MINUS, digit_to_subscript)
+        write_number::<Subscript>(f, self.denominator)?;
+        Ok(())
     }
 }
 
-fn write_number(
-    f: &mut fmt::Formatter<'_>,
-    number: i64,
-    minus_character: char,
-    map_digit: impl Fn(u8) -> char,
-) -> fmt::Result {
+fn write_number<T>(f: &mut fmt::Formatter<'_>, number: i64) -> fmt::Result
+where
+    T: Transformation,
+{
     if number.is_negative() {
-        f.write_char(minus_character)?;
+        f.write_char(T::MINUS_CHARACTER)?;
     }
     for digit in number.abs().digits() {
-        write!(f, "{}", map_digit(digit))?;
+        write!(f, "{}", T::map_digit(digit))?;
     }
     Ok(())
+}
+
+trait Transformation {
+    const MINUS_CHARACTER: char;
+    fn map_digit(digit: u8) -> char;
+}
+
+struct Superscript;
+impl Transformation for Superscript {
+    const MINUS_CHARACTER: char = '\u{207B}';
+    fn map_digit(digit: u8) -> char {
+        match digit {
+            0 => '\u{2070}',
+            1 => '\u{00B9}',
+            2 => '\u{00B2}',
+            3 => '\u{00B3}',
+            4 => '\u{2074}',
+            5 => '\u{2075}',
+            6 => '\u{2076}',
+            7 => '\u{2077}',
+            8 => '\u{2078}',
+            9 => '\u{2079}',
+            _ => unreachable!(),
+        }
+    }
+}
+
+struct Subscript;
+impl Transformation for Subscript {
+    const MINUS_CHARACTER: char = '\u{208B}';
+    fn map_digit(digit: u8) -> char {
+        match digit {
+            0 => '\u{2080}',
+            1 => '\u{2081}',
+            2 => '\u{2082}',
+            3 => '\u{2083}',
+            4 => '\u{2084}',
+            5 => '\u{2085}',
+            6 => '\u{2086}',
+            7 => '\u{2087}',
+            8 => '\u{2088}',
+            9 => '\u{2089}',
+            _ => unreachable!(),
+        }
+    }
 }
 
 fn find_special_vulgar_fraction(nominator: i64, denominator: i64) -> Option<char> {
@@ -90,38 +124,6 @@ fn find_special_vulgar_fraction(nominator: i64, denominator: i64) -> Option<char
         .binary_search_by_key(&(nominator, denominator), |entry| entry.0)
         .ok()?;
     Some(SPECIAL_FRACTIONS[index].1)
-}
-
-fn digit_to_superscript(digit: u8) -> char {
-    match digit {
-        0 => '\u{2070}',
-        1 => '\u{00B9}',
-        2 => '\u{00B2}',
-        3 => '\u{00B3}',
-        4 => '\u{2074}',
-        5 => '\u{2075}',
-        6 => '\u{2076}',
-        7 => '\u{2077}',
-        8 => '\u{2078}',
-        9 => '\u{2079}',
-        _ => unreachable!(),
-    }
-}
-
-fn digit_to_subscript(digit: u8) -> char {
-    match digit {
-        0 => '\u{2080}',
-        1 => '\u{2081}',
-        2 => '\u{2082}',
-        3 => '\u{2083}',
-        4 => '\u{2084}',
-        5 => '\u{2085}',
-        6 => '\u{2086}',
-        7 => '\u{2087}',
-        8 => '\u{2088}',
-        9 => '\u{2089}',
-        _ => unreachable!(),
-    }
 }
 
 #[cfg(test)]
