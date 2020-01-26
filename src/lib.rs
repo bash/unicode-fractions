@@ -61,25 +61,28 @@ impl VulgarFraction {
 
     fn write_nominator(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const SUPERSCRIPT_MINUS: char = '\u{207B}';
-        if self.nominator.is_negative() {
-            f.write_char(SUPERSCRIPT_MINUS)?;
-        }
-        for digit in self.nominator.abs().digits() {
-            write!(f, "{}", digit_to_superscript(digit))?;
-        }
-        Ok(())
+        write_number(f, self.nominator, SUPERSCRIPT_MINUS, digit_to_superscript)
     }
 
     fn write_denominator(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const SUBSCRIPT_MINUS: char = '\u{208B}';
-        if self.denominator.is_negative() {
-            f.write_char(SUBSCRIPT_MINUS)?;
-        }
-        for digit in self.denominator.abs().digits() {
-            write!(f, "{}", digit_to_subscript(digit))?;
-        }
-        Ok(())
+        write_number(f, self.denominator, SUBSCRIPT_MINUS, digit_to_subscript)
     }
+}
+
+fn write_number(
+    f: &mut fmt::Formatter<'_>,
+    number: i64,
+    minus_character: char,
+    map_digit: impl Fn(u8) -> char,
+) -> fmt::Result {
+    if number.is_negative() {
+        f.write_char(minus_character)?;
+    }
+    for digit in number.abs().digits() {
+        write!(f, "{}", map_digit(digit))?;
+    }
+    Ok(())
 }
 
 fn find_special_vulgar_fraction(nominator: i64, denominator: i64) -> Option<char> {
