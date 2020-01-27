@@ -3,6 +3,7 @@ name = "vulgar-fractions"
 version = "0.1.0"
 authors = ["Ruben Schmidmeister <ruben.schmidmeister@icloud.com>"]
 edition = "2018"
+license = "MIT"
 
 [dependencies]
 digits_iterator = "0.1.0"
