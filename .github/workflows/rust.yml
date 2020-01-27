@@ -31,5 +31,5 @@ jobs:
       uses: actions-rs/clippy-check@1f43527596b05bc935a41b80fad24a2117b68b2a
       with:
         token: ${secrets.GH_TOKEN}
-        toolchain: nightly
+        # toolchain: nightly
         args: --all-features --tests
