@@ -6,6 +6,18 @@ use std::fmt::{self, Display, Write};
 mod single_character_fractions;
 mod transformation;
 
+/// Represents a [Vulgar Fraction] that can be formatted to a unicode fraction using the [`Display`] trait.
+/// When available, [single character fractions] are used.
+///
+/// ## Examples
+/// ```
+/// use vulgar_fractions::VulgarFraction;
+/// println!("{}", VulgarFraction::new(10, 3)); // Prints '¹⁰⁄₃'
+/// println!("{}", VulgarFraction::new(1, 4)); // Prints '¼'
+/// ```
+///
+/// [Vulgar Fraction]: https://en.wikipedia.org/wiki/Fraction_(mathematics)#Simple,_common,_or_vulgar_fractions
+/// [single character fractions]: http://unicodefractions.com
 #[derive(Debug, Copy, Clone)]
 pub struct VulgarFraction {
     nominator: i64,
