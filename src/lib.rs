@@ -135,7 +135,7 @@ mod tests {
     fn all_digits_in_the_nominator_can_be_formatted() {
         assert_eq!(
             "¹²³⁴⁵⁶⁷⁸⁹⁰⁄₁",
-            VulgarFraction::new(1234567890, 1).to_string()
+            VulgarFraction::new(1_234_567_890, 1).to_string()
         );
     }
 
@@ -143,7 +143,7 @@ mod tests {
     fn all_digits_in_the_denominator_can_be_formatted() {
         assert_eq!(
             "¹⁄₁₂₃₄₅₆₇₈₉₀",
-            VulgarFraction::new(1, 1234567890).to_string()
+            VulgarFraction::new(1, 1_234_567_890).to_string()
         );
     }
 
