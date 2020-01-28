@@ -6,8 +6,12 @@ GENERATED_DISCLAIMER=$(cat <<EOF
 
 EOF
 )
-
 SINGLE_CHARACTER_FRACTIONS_FILE="src/generated/single_character_fractions.rs"
+UNICODE_DATA_URL="https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+UCD_DATA_PATH="ucd-data"
+
+mkdir -p -- "$UCD_DATA_PATH"
+(cd "$UCD_DATA_PATH" && wget -N -- "$UNICODE_DATA_URL")
 
 echo "$GENERATED_DISCLAIMER" > "$SINGLE_CHARACTER_FRACTIONS_FILE"
 cargo run --bin generate_vulgar_fraction_lookup_fn -p codegen \
