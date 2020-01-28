@@ -1,9 +1,9 @@
+use self::generated::find_single_character_fraction;
 use self::transformation::{Subscript, Superscript, Transformation};
 use digits_iterator::DigitsExtension;
-use single_character_fractions::find_single_character_fraction;
 use std::fmt::{self, Display, Write};
 
-mod single_character_fractions;
+mod generated;
 mod transformation;
 
 /// Represents a [Vulgar Fraction] that can be formatted to a unicode fraction using the [`Display`] trait.
@@ -67,7 +67,6 @@ where
 
 #[cfg(test)]
 mod tests {
-    use super::single_character_fractions::SINGLE_CHARACTER_FRACTIONS;
     use super::*;
     use std::string::ToString;
 
@@ -103,12 +102,12 @@ mod tests {
     }
 
     #[test]
-    fn single_character_fractions_are_used() {
-        for ((nominator, denominator), expected_fraction) in SINGLE_CHARACTER_FRACTIONS {
-            assert_eq!(
-                expected_fraction.to_string(),
-                VulgarFraction::new(*nominator, *denominator).to_string(),
-            );
-        }
+    fn uses_single_character_fraction_for_1_2() {
+        assert_eq!("½", VulgarFraction::new(1, 2).to_string());
+    }
+
+    #[test]
+    fn uses_single_character_fraction_for_1_10() {
+        assert_eq!("⅒", VulgarFraction::new(1, 10).to_string());
     }
 }
