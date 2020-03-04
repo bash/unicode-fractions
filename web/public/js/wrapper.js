@@ -8,14 +8,14 @@ export function curryVulgarFraction(exports, memory) {
     return (nominator, denominator) => vulgarFractionWasm(nominator, denominator);
 }
 
-function wrapWasmStringFunction(fn, getLengthFn, freeFn, memory) {
+function wrapWasmStringFunction(fn, getLength, freeString, memory) {
     return (...args) => {
         const pointer = fn(...args);
-        const length = getLengthFn(pointer);
+        const length = getLength(pointer);
         const rawString = new Uint8Array(memory.buffer, pointer, length);
         const decoder = new TextDecoder();
         const string = decoder.decode(rawString);
-        freeFn(pointer);
+        freeString(pointer);
         return string;
     };
 }
