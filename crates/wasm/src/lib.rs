@@ -15,12 +15,10 @@ pub extern "C" fn vulgar_fraction(nominator: i32, denominator: i32) -> *mut c_ch
 
 #[no_mangle]
 pub extern "C" fn vulgar_fraction_len(raw: *mut c_char) -> usize {
-    unsafe {
-        let string = CString::from_raw(raw);
-        let length = string.as_bytes().len();
-        string.into_raw();
-        length
-    }
+    let string = unsafe { CString::from_raw(raw) };
+    let length = string.as_bytes().len();
+    string.into_raw();
+    length
 }
 
 #[no_mangle]
