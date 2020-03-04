@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unicode Vulgar Fractions Generator</title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <main>
+        <header>
+            <h1>Unicode Vulgar Fractions Generator</h1>
+            <a href="https://github.com/bash/vulgar-fractions">Source Code</a>
+        </header>
+        <label>
+            <span>Nominator</span>
+            <input type="number" id="nominator" inputmode="numeric" />
+        </label>
+        <label>
+            <span>Denominator</span>
+            <input type="number" id="denominator" inputmode="numeric" />
+        </label>
+        
+        <label>
+            <div class="output">
+                <input type="text" id="fraction" readonly />
+                <button id="copy" disabled>Copy</button>
+            </div>
+        </label>
+    </main>
+
+    <script type="module" src="/js/index.js" async></script>
+</body>
+</html>
