@@ -1,8 +1,7 @@
 import { curryVulgarFraction } from './wrapper.js';
 
 export function bindUserControls({ exports, memory }) {
-    const nominatorInput = document.querySelector('#nominator');
-    const denominatorInput = document.querySelector('#denominator');
+    const input = document.querySelector('#input');
     const resultElement = document.querySelector('#fraction');
     const copyButton = document.querySelector('#copy');
 
@@ -10,14 +9,11 @@ export function bindUserControls({ exports, memory }) {
     const vulgarFractionWithFallback = curryVulgarFractionWithFallback(vulgarFraction);
 
     function updateOutput() {
-        resultElement.value = vulgarFractionWithFallback(
-            nominatorInput.valueAsNumber,
-            denominatorInput.valueAsNumber);
+        resultElement.value = vulgarFractionWithFallback(input.value);
         updateCopyButtonState(resultElement, copyButton);
     }
 
-    nominatorInput.addEventListener('input', updateOutput);
-    denominatorInput.addEventListener('input', updateOutput);
+    input.addEventListener('input', updateOutput);
     copyButton.addEventListener('click', () => copyToClipboard(resultElement));
 }
 
@@ -40,11 +36,25 @@ function updateCopyButtonState(inputElement, copyButton) {
 }
 
 function curryVulgarFractionWithFallback(vulgarFraction) {
-    return (nominator, denominator) => {
-        const isNominatorValid = Number.isFinite(nominator);
-        const isDenominatorValid = Number.isFinite(denominator);
-        return isNominatorValid && isDenominatorValid
-            ? vulgarFraction(nominator, denominator)
-            : '';
+    return (input) => {
+        const fraction = parseAsciiFraction(input);
+        console.log(fraction);
+        return (fraction != null)
+            ? vulgarFraction(fraction.nominator, fraction.denominator)
+            : input;
     }
+}
+
+function parseAsciiFraction(input) {
+    const parts = input.split('/').map(p => p.trim());
+    console.log(input, parts);
+    
+    if (parts.length !== 2) return null;
+
+    const nominator = Number.parseInt(parts[0]);
+    const denominator = Number.parseInt(parts[1]);
+
+    return (!Number.isNaN(nominator) && !Number.isNaN(denominator)
+        ? { nominator, denominator }
+        : null);
 }
