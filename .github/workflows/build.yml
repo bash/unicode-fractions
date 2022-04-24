@@ -26,7 +26,7 @@ jobs:
       run: ./scripts/build-wasm.sh
     - name: Deploy to GitHub Pages
       if: success() && github.ref == 'refs/heads/main'
-      uses: JamesIves/github-pages-deploy-action@1230c334d1972ba00d6e3ea7c5af812f81ebcb9c
+      uses: JamesIves/github-pages-deploy-action@v4.3.0
       with:
         branch: gh-pages
         folder: web/public
