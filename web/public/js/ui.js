@@ -38,7 +38,6 @@ function updateCopyButtonState(inputElement, copyButton) {
 function curryVulgarFractionWithFallback(vulgarFraction) {
     return (input) => {
         const fraction = parseAsciiFraction(input);
-        console.log(fraction);
         return (fraction != null)
             ? vulgarFraction(fraction.nominator, fraction.denominator)
             : input;
@@ -47,7 +46,6 @@ function curryVulgarFractionWithFallback(vulgarFraction) {
 
 function parseAsciiFraction(input) {
     const parts = input.split('/').map(p => p.trim());
-    console.log(input, parts);
     
     if (parts.length !== 2) return null;
 
