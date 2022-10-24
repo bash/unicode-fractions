@@ -14,13 +14,13 @@ pub unsafe extern "C" fn vulgar_fraction(nominator: i32, denominator: i32) -> *m
 pub unsafe extern "C" fn vulgar_fraction_len(raw: *mut c_char) -> usize {
     let string = CString::from_raw(raw);
     let length = string.as_bytes().len();
-    string.into_raw();
+    _ = string.into_raw();
     length
 }
 
 #[no_mangle]
 pub unsafe extern "C" fn vulgar_fraction_free(raw: *mut c_char) {
     if !raw.is_null() {
-        CString::from_raw(raw);
+        drop(CString::from_raw(raw));
     }
 }
