@@ -2,9 +2,6 @@ use std::ffi::CString;
 use std::os::raw::c_char;
 use vulgar_fractions::VulgarFraction;
 
-#[global_allocator]
-static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-
 #[no_mangle]
 pub unsafe extern "C" fn vulgar_fraction(nominator: i32, denominator: i32) -> *mut c_char {
     let vulgar_fraction =
