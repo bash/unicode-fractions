@@ -26,7 +26,8 @@ jobs:
       run: ./scripts/build-wasm.sh
     - name: Upload GitHub Pages Artifact
       uses: actions/upload-pages-artifact@v1
-      path: web/public
+      with:
+        path: web/public
   deploy_pages:
     needs: build
 
