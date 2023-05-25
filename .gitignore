@@ -1,5 +1,2 @@
 /target
-**/*.rs.bk
-Cargo.lock
-/ucd-data/
-/web/public/*.wasm
+*.wasm
