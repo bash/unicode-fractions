@@ -6,7 +6,7 @@ edition = "2018"
 license = "MIT"
 
 [dependencies]
-vulgar-fractions = { path = "../../" }
+fmtastic = "0.1.0"
 
 [lib]
 crate-type = ["cdylib"]

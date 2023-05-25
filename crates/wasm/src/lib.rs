@@ -1,11 +1,10 @@
+use fmtastic::VulgarFraction;
 use std::ffi::CString;
 use std::os::raw::c_char;
-use vulgar_fractions::VulgarFraction;
 
 #[no_mangle]
 pub unsafe extern "C" fn vulgar_fraction(nominator: i32, denominator: i32) -> *mut c_char {
-    let vulgar_fraction =
-        VulgarFraction::new(i64::from(nominator), i64::from(denominator)).to_string();
+    let vulgar_fraction = VulgarFraction::new(nominator, denominator).to_string();
     let c_string = CString::new(vulgar_fraction).expect("Fraction should not contain null bytes");
     c_string.into_raw()
 }
