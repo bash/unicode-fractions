@@ -1,3 +1,5 @@
+#![allow(clippy::missing_safety_doc)]
+
 use fmtastic::VulgarFraction;
 use std::ffi::CString;
 use std::os::raw::c_char;
