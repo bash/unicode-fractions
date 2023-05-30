@@ -54,7 +54,7 @@ body {
     justify-content: center;
     grid-template-areas: '.' 'header' 'main' '.' 'footer';
     grid-template-rows: 1fr max-content max-content 1fr max-content;
-    min-height: 100vh;
+    min-height: 100dvh;
 }
 
 header { grid-area: header; }
