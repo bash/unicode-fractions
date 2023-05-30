@@ -1,7 +1,5 @@
-# Vulgar Fractions
-A [website] that uses the [fmtastic] crate to transform *boring* ASCII fractions
-such as -17/8 into *awesome ✨* Unicode fractions such as ⁻¹⁷⁄₈
+# Unicode Fractions
 
+Magically transforms your *ugly* ~~ducklings~~ ASCII fractions into *beautiful* ~~swans~~ Unicode fractions.
 
-[website]: https://frac.rubys.ninja
-[fmtastic]: https://crates.io/crates/fmtastic
+[Try it! ✨](https://www.unicodefractions.com/)
