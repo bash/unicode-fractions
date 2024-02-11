@@ -65,6 +65,32 @@ header, main, footer {
     padding: 20px;
 }
 
+footer::before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: .3em;
+    width: 1.34em;
+    height: 1.5em;
+    background-color: currentColor;
+    mask-image: url(/fleuron.svg);
+    mask-size: auto 1em;
+    mask-position: center;
+    mask-repeat: no-repeat;
+}
+
+@media (hover: hover) and (not (prefers-contrast: more)) {
+    footer {
+        opacity: .3;
+        transition: opacity 125ms;
+    }
+
+    footer:hover,
+    footer:focus-within {
+        opacity: 1;
+    }
+}
+
 h1 {
     font-weight: 900;
     font-size: 3rem;
